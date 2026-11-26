@@ -1,4 +1,5 @@
 """Run against a local server. Only synthetic guest data are created."""
+import argparse
 from datetime import datetime, timedelta
 import json
 import os
@@ -60,4 +61,10 @@ def main():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Демонстрация бронирования в локальном ресторане.")
+    parser.add_argument("--port", type=int, default=8000, help="Порт локального сервера (по умолчанию 8000).")
+    port = parser.parse_args().port
+    if not 1 <= port <= 65535:
+        parser.error("Номер порта должен быть в диапазоне 1–65535.")
+    BASE = f"http://127.0.0.1:{port}"
     main()
